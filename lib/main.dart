@@ -21,35 +21,26 @@ class MiAplicacion extends StatelessWidget {
       theme: TemaGeneral.temaClaro,
       darkTheme: TemaGeneral.temaOscuro,
       themeMode: ThemeMode.light,
-      initialRoute: VistaCompraBoleto.routeName,
-      onGenerateRoute: (settings) {
-        switch (settings.name) {
-          case '/':
-          case VistaCompraBoleto.routeName:
-            return MaterialPageRoute(
-              settings: settings,
-              builder: (_) => const VistaCompraBoleto(),
-            );
-          case VistaNotaVentaBoleto.routeName:
-            final args = settings.arguments;
-            if (args is! BoletoModelo) {
-              return MaterialPageRoute(
-                settings: settings,
-                builder: (_) => const _RutaInvalida(),
-              );
-            }
-            return MaterialPageRoute(
-              settings: settings,
-              builder: (_) => VistaNotaVentaBoleto(boleto: args),
-            );
-          default:
-            return MaterialPageRoute(
-              settings: settings,
-              builder: (_) => const _RutaInvalida(),
-            );
-        }
+      routes: {
+        '/': (context) => const VistaCompraBoleto(),
+        VistaCompraBoleto.routeName: (context) => const VistaCompraBoleto(),
+        VistaNotaVentaBoleto.routeName: (context) => const _RutaNotaVentaBoleto(),
       },
+      onUnknownRoute: (_) => MaterialPageRoute(builder: (_) => const _RutaInvalida()),
     );
+  }
+}
+
+class _RutaNotaVentaBoleto extends StatelessWidget {
+  const _RutaNotaVentaBoleto();
+
+  @override
+  Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)?.settings.arguments;
+    if (args is! BoletoModelo) {
+      return const _RutaInvalida();
+    }
+    return VistaNotaVentaBoleto(boleto: args);
   }
 }
 
