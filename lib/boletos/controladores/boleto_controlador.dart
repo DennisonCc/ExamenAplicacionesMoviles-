@@ -3,7 +3,7 @@ import '../modelos/boleto_modelo.dart';
 class BoletoControlador {
   static const double _ivaRate = 0.15;
 
-  // Valores por defecto (editables) ya que el enunciado no define tarifas.
+
   static const Map<String, double> _tarifaPorRuta = {
     'Latacunga-Quito': 5.00,
     'Latacunga-Ambato': 3.00,
@@ -16,8 +16,7 @@ class BoletoControlador {
     'tercera edad': 0.30,
   };
 
-  /// Construye el [BoletoModelo] validando y calculando todos los valores.
-  /// Lanza [FormatException] si hay errores de validacion.
+
   BoletoModelo crearBoleto({
     required String nombrePasajero,
     required String ruta,
